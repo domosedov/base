@@ -1,3 +1,4 @@
+// @ts-check
 import { FlatCompat } from '@eslint/eslintrc'
 import vitest from '@vitest/eslint-plugin'
 import { dirname } from 'path'
@@ -20,14 +21,33 @@ const eslintConfig = [
     ],
     plugins: ['@reatom'],
   }),
+  // Vitest config
   {
     files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx'],
+    ignores: ['**/e2e/**'],
     plugins: {
       vitest,
     },
     rules: {
       ...vitest.configs.all.rules,
       'vitest/max-expects': ['warn', { max: 10 }],
+    },
+  },
+  {
+    rules: {
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          vars: 'all',
+          args: 'after-used',
+          ignoreRestSiblings: false,
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^(_|ignore)',
+        },
+      ],
+      '@typescript-eslint/consistent-type-imports': 'error',
     },
   },
 ]

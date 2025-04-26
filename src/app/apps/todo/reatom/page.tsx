@@ -1,4 +1,4 @@
-import { TodoApp } from "./todo-app";
+import { TodoApp } from './todo-app'
 
 export default function TodoReatomPage() {
   return (
@@ -6,5 +6,5 @@ export default function TodoReatomPage() {
       <h1>Todo Reatom</h1>
       <TodoApp />
     </div>
-  );
+  )
 }

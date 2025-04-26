@@ -4,7 +4,7 @@ const sharedExclude = ['**/e2e/**', '.next', '.swc', 'public']
 
 export default defineWorkspace([
   {
-    extends: 'vitest.config.ts',
+    extends: 'vitest.config.mts',
     test: {
       name: 'node',
       environment: 'node',
@@ -16,7 +16,7 @@ export default defineWorkspace([
     },
   },
   {
-    extends: 'vitest.config.ts',
+    extends: 'vitest.config.mts',
     test: {
       name: 'browser',
       include: ['**/*.browser.{test,spec}.{ts,tsx}'],
