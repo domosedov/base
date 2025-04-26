@@ -1,7 +1,11 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
+import { swcPlugins } from './swc-plugins.config'
 
 const nextConfig: NextConfig = {
-  /* config options here */
-};
+  experimental: {
+    reactCompiler: true,
+    swcPlugins,
+  },
+}
 
-export default nextConfig;
+export default nextConfig
