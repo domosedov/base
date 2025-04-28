@@ -7,6 +7,15 @@ const nextConfig: NextConfig = {
     reactCompiler: true,
     dynamicIO: true,
     useCache: true,
+    nodeMiddleware: true,
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/jsonp/:path*',
+        destination: 'https://jsonplaceholder.typicode.com/:path*',
+      },
+    ]
   },
   async headers() {
     return [

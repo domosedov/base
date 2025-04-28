@@ -1,9 +1,6 @@
 'use client'
 
-import * as testModule from 'next/experimental/testmode/playwright'
 import { useEffect, useState } from 'react'
-
-console.log(testModule)
 
 export default function HelloWorld({ name }: { name: string }) {
   const [count, setCount] = useState(0)
