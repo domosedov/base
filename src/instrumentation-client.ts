@@ -1,4 +1,4 @@
-if (process.env.NEXT_PUBLIC_E2E_TESTING !== '1') {
+if (process.env.NEXT_PUBLIC_TEST === 'e2e') {
   import('@/mocks/browser').then(async ({ worker }) => {
     await worker.start()
   })

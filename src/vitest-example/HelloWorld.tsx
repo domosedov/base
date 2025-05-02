@@ -8,7 +8,7 @@ export default function HelloWorld({ name }: { name: string }) {
 
   useEffect(() => {
     console.log('Count...', count)
-  }, [])
+  }, [count])
 
   useEffect(() => {
     fetch('/api/hello')

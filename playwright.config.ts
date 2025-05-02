@@ -40,7 +40,7 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'NEXT_PUBLIC_E2E_TESTING=1 npm run dev',
+    command: 'NEXT_PUBLIC_TEST=e2e npm run dev',
     url: baseURL,
     timeout: 120 * 1000,
     reuseExistingServer: !process.env.CI,
