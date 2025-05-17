@@ -41,6 +41,8 @@ export const todosQuery = createQuery({
   initialData: [],
 })
 
+todosQuery.__.$latestParams.watch(console.log)
+
 concurrency(todosQuery, {
   strategy: 'TAKE_LATEST',
 })

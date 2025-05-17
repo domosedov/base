@@ -19,7 +19,7 @@ const Modal = reatomComponent(() => {
   return (
     <div>
       <div>{modalAtom() ? 'open' : 'close'}</div>
-      <button onClick={() => modalAtom(is => !is)}>toggle</button>
+      <button onClick={() => modalAtom()}>toggle</button>
     </div>
   )
 }, 'Modal')
@@ -40,7 +40,7 @@ const TodoForm = reatomComponent(() => {
       <input
         type='text'
         value={newTodoTitleAtom()}
-        onChange={e => newTodoTitleAtom(e.target.value)}
+        onChange={() => newTodoTitleAtom()}
       />
     </div>
   )
