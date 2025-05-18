@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-sync-scripts */
 import { QueryClientProvider } from '@/api/query-client-provider'
 import type { Metadata } from 'next'
 import './globals.css'
@@ -14,6 +15,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
+      <head>
+        <script
+          crossOrigin='anonymous'
+          src='//unpkg.com/react-scan/dist/auto.global.js'
+        />
+      </head>
       <body className='antialiased'>
         <QueryClientProvider>{children}</QueryClientProvider>
       </body>

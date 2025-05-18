@@ -14,7 +14,9 @@
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/modifiers": "^9.0.0",
     "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@effector/model": "^0.0.7",
     "@effector/model-react": "^0.0.7",
     "@effector/next": "^0.7.1",
@@ -40,6 +42,7 @@
     "react-aria-components": "^1.8.0",
     "react-dom": "^19.1.0",
     "react-resizable-panels": "^3.0.2",
+    "remeda": "^2.21.6",
     "sonner": "^2.0.3",
     "tailwind-merge": "^3.3.0",
     "vaul": "^1.1.2",
