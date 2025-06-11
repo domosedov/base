@@ -19,7 +19,7 @@ const Modal = reatomComponent(() => {
   return (
     <div>
       <div>{modalAtom() ? 'open' : 'close'}</div>
-      <button onClick={() => modalAtom()}>toggle</button>
+      <button onClick={() => modalAtom.set(!modalAtom())}>toggle</button>
     </div>
   )
 }, 'Modal')

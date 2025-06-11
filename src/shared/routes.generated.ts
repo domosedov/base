@@ -16,6 +16,12 @@ function generateQueryString(
 }
 
 export const routes = {
+  '/api/hello': (
+    params?: { query?: Record<string, string | number | boolean> } | void,
+  ) => {
+    if (!params) return '/api/hello'
+    return `/api/hello${generateQueryString(params?.query)}`
+  },
   '/apps/todo/effector': (
     params?: { query?: Record<string, string | number | boolean> } | void,
   ) => {
@@ -27,6 +33,12 @@ export const routes = {
   ) => {
     if (!params) return '/apps/todo/reatom'
     return `/apps/todo/reatom${generateQueryString(params?.query)}`
+  },
+  '/apps/virtual-dnd': (
+    params?: { query?: Record<string, string | number | boolean> } | void,
+  ) => {
+    if (!params) return '/apps/virtual-dnd'
+    return `/apps/virtual-dnd${generateQueryString(params?.query)}`
   },
   '/': (
     params?: { query?: Record<string, string | number | boolean> } | void,

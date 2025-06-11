@@ -1,0 +1,40 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+- Для управления состоянием используй Effector и библиотеки из его экосистемы(patrunum, @farfetched/core, effector-action, effector-react)
+- для создания стора используется createStore
+- для создания действия на которое будет реагировать стор используется createEvent, но предпочтительный способ это использования createAction и immer(для работы со сложными структурами, такими как объекты и массивы)
+Пример
+```ts
+
+const $count = createStore(0)
+
+const $limit = createStore(100)
+
+const logFx = createEffect(() => {
+  console.log('Достигнут лимит')
+})
+
+const incrementBy = createAction({
+  target: {
+    count: $count
+    log: logFx
+  },
+  source: {
+    count: $count,
+    limit: $limit
+  },
+  fn: (targets, sources, payload: { step: number } | undefined) => {
+    const {step = 1} = payload ?? {}
+
+    if (sources.count >= sources.limit) {
+      targets.log()
+    } else {
+      targets.count(currentCount => currentCount + step)
+    }
+
+  }})
+
+```

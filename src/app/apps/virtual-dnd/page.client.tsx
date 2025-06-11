@@ -56,30 +56,18 @@ function VirtualContainer({
       ref={ref}
       style={{
         height: style?.height,
-        position: 'relative',
-        tableLayout: 'fixed',
-        borderCollapse: 'collapse',
-        whiteSpace: 'nowrap',
       }}
-      className='grid'
+      className='relative grid border-collapse'
     >
-      <thead className='flex'>
-        <tr className='flex'>
-          <th className='min-w-[200px] flex-1'>Drag</th>
-          <th>Title</th>
-          <th>Completed</th>
-          <th>User Id</th>
+      <thead className='sticky top-0 left-0 z-10 flex bg-gray-100'>
+        <tr className='flex w-full'>
+          <th className='min-w-[100px] flex-1 p-2 text-left'>Drag</th>
+          <th className='min-w-[300px] flex-1 p-2 text-left'>Title</th>
+          <th className='min-w-[100px] flex-1 p-2 text-left'>Completed</th>
+          <th className='min-w-[100px] flex-1 p-2 text-left'>User Id</th>
         </tr>
       </thead>
-      <tbody
-        style={{
-          ...style,
-          contain: undefined,
-          position: 'absolute',
-          left: 0,
-        }}
-        className='grid'
-      >
+      <tbody style={style} className='grid'>
         {children}
       </tbody>
     </table>
@@ -107,6 +95,11 @@ export default function List() {
   })
 
   const [activeId, setActiveId] = useState<number | null>(null)
+
+  const activeTodo = useMemo(() => {
+    if (!activeId || !todos) return null
+    return todos.find(todo => todo.id === activeId)
+  }, [activeId, todos])
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -157,30 +150,51 @@ export default function List() {
           <div className='h-100 overflow-y-auto'>
             <Virtualizer as={VirtualContainer} item={VirtualItem}>
               {todos.map(todo => (
-                <SortableItem key={todo.id} todoId={todo.id} />
+                <SortableItem key={todo.id} todo={todo} />
               ))}
             </Virtualizer>
           </div>
         </div>
       </SortableContext>
       <DragOverlay>
-        {activeId != null ? <Item id={activeId.toString()}>LOL</Item> : null}
+        {activeTodo ? <Item todo={activeTodo} /> : null}
       </DragOverlay>
     </DndContext>
   )
 }
 
-const Item = ({ className, ...props }: ComponentProps<'div'>) => {
-  return <div className={cx('', className)} {...props} />
+const Item = ({
+  todo,
+  className,
+  ...props
+}: { todo: Todo } & ComponentProps<'div'>) => {
+  return (
+    <div
+      className={cx(
+        'flex border-b border-b-gray-300 bg-white p-2 shadow-lg',
+        className,
+      )}
+      {...props}
+      // Можно задать фиксированную ширину, если необходимо, или она унаследуется
+    >
+      <div className='min-w-[200px] p-2'>
+        {/* Можно отобразить иконку перетаскивания или оставить пустым */}
+        <div className='size-8 cursor-grabbing rounded-lg bg-gray-300 opacity-75' />
+      </div>
+      <div className='p-2'>{todo.title}</div>
+      <div className='p-2'>{todo.completed.toString()}</div>
+      <div className='p-2'>{todo.userId}</div>
+    </div>
+  )
 }
 
 const SortableItem = ({
   ref,
   style,
   className,
-  todoId,
+  todo,
   ...props
-}: { todoId: Todo['id'] } & ComponentProps<'div'>) => {
+}: { todo: Todo } & ComponentProps<'tr'>) => {
   const {
     attributes,
     listeners,
@@ -188,15 +202,7 @@ const SortableItem = ({
     transform,
     transition,
     isDragging,
-  } = useSortable({ id: todoId })
-
-  const queryClient = useQueryClient()
-
-  const todo = useMemo(() => {
-    const todos = queryClient.getQueryData<Todo[]>(['todos'])
-    const todo = todos?.find(todo => todo.id === todoId)
-    return todo
-  }, [queryClient, todoId])
+  } = useSortable({ id: todo.id }) // Используем todo.id
 
   const dndStyle: CSSProperties = {
     transform: CSS.Transform.toString(transform),
@@ -211,7 +217,7 @@ const SortableItem = ({
       className={cx('flex border-b border-b-gray-300', className)}
       {...props}
     >
-      <td className='min-w-[200px] p-2'>
+      <td className='min-w-[100px] flex-1 p-2'>
         <button
           type='button'
           className='size-8 cursor-grab rounded-lg bg-gray-300'
@@ -219,9 +225,9 @@ const SortableItem = ({
           {...listeners}
         />
       </td>
-      <td className='p-2'>{todo?.title}</td>
-      <td className='p-2'>{todo?.userId}</td>
-      <td className='p-2'>{todo?.userId}</td>
+      <td className='min-w-[300px] flex-1 p-2'>{todo.title}</td>
+      <td className='min-w-[100px] flex-1 p-2'>{todo.completed.toString()}</td>
+      <td className='min-w-[100px] flex-1 p-2'>{todo.userId}</td>
     </tr>
   )
 }
